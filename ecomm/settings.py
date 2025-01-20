@@ -102,3 +102,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email configuration
 # django use this to send email for verification and setup
+EMAIL_BACKEND = ''
+SENDGRID_API_KEY = ''  # create your own email api keys from any plateform 
+DEFAULT_FROM_EMAIL = ''
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Set to True during testing
+
