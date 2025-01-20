@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple E-Commerce Website</title>
+
+    <style>
+      /* General Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        background-color: #e5f2f2;
+
+        color: #333;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: #407a80;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .navbar .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000;
+      }
+
+      .navbar nav {
+        display: flex;
+        gap: 20px;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: #ffeb3b;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .search-bar input {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        width: 250px;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-bar input:focus {
+        outline: none;
+        border: 1px solid #0056b3;
+      }
+
+      .search-bar button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #0056b3;
+        color: white;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-bar button:hover {
+        background-color: #003d80;
+      }
+
+      .auth {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .auth a {
+        text-decoration: none;
+        font-size: 1rem;
+        color: white;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .auth a:hover {
+        color: #ffeb3b;
+      }
+
+      .auth a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #ffeb3b;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+
+      .auth a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .search-bar {
+          width: 100%;
+          margin: 10px 0;
+        }
+
+        .search-bar input {
+          width: 100%;
+        }
+
+        .auth {
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="navbar">
+        <div class="logo">ShopSphere</div>
+        <nav>
+          <a href="#">Home</a>
+          <a href="#">Categories</a>
+          <a href="#">Contact</a>
+        </nav>
+        <div class="search-bar">
+          <input type="text" placeholder="Search for products" />
+          <button>Search</button>
+        </div>
+        <div class="auth">
+          <a href="#">Orders</a>
+          <a href="#">Cart</a>
+          <a href="#">Sign In</a>
+          <a href="#">Register</a>
+        </div>
+      </div>
+    </header>
+
+    {% block start %}{% endblock %}
+  </body>
+</html>

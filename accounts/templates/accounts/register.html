@@ -1,0 +1,136 @@
+{% extends "base/base.html" %} {% block start %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Simple E-Commerce</title>
+    <style>
+      /* Basic Reset */
+      body,
+      h1,
+      h2,
+      p,
+      ul,
+      li,
+      a,
+      img,
+      div,
+      input,
+      button {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Registration Box */
+      .registration-box {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 30px 300px rgba(34, 85, 87, 0.1);
+      }
+
+      .registration-box h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 24px;
+      }
+
+      .registration-box form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .registration-box input {
+        margin-bottom: 15px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+      }
+
+      .registration-box input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      .registration-box button {
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .registration-box button:hover {
+        background-color: #0056b3;
+      }
+
+      .registration-box p {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 15px;
+        color: #666;
+      }
+
+      .registration-box p a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .registration-box p a:hover {
+        text-decoration: underline;
+      }
+
+      /* Footer */
+      footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 10px 0;
+        background-color: #333;
+        color: white;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+
+    <!-- Registration Box -->
+    <div class="registration-box">
+      <h2>Register</h2>
+      <form action="#" method="post">
+        {% csrf_token %} {% include "base/alert.html" %}
+
+        <input type="text" placeholder="Full Name" name="full_name" required />
+        <input type="email" placeholder="Email Address" name="email" required />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="confirm_password"
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+      <p>Already have an account? <a href="#">Sign In</a></p>
+    </div>
+
+    <!-- Footer -->
+  </body>
+</html>
+
+{% endblock %}

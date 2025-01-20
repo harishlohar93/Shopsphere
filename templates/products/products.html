@@ -1,0 +1,114 @@
+{% extends "base/base.html" %} {% block start %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+      <div class="bg-white p-6 rounded shadow">
+        <div class="grid grid-cols-2 gap-8">
+          <!-- Left: Product Images -->
+          <div>
+            <img
+              src="/media/{{ product.product_images.first.image }}"
+              class="w-full h-96 object-cover rounded shadow"
+              alt="Product Image"
+            />
+            <div class="flex mt-4 space-x-4">
+              {% for image in product.product_images.all %}
+              <img
+                src="/media/{{ image.image }}"
+                class="w-16 h-16 object-cover rounded cursor-pointer hover:opacity-80"
+                alt="Thumbnail"
+              />
+              {% endfor %}
+            </div>
+          </div>
+          <!-- Right: Product Details -->
+          <div>
+            <h1 class="text-2xl font-bold">{{ product.product_name }}</h1>
+            <p class="text-lg text-gray-700 mt-2">
+              {{ product.product_description }}
+            </p>
+            <p class="text-xl font-semibold text-green-500 mt-4">
+              Price: ${{ product.price }}
+            </p>
+
+            <!-- Color Options -->
+            <div class="mt-4">
+              <label for="color" class="block font-medium text-gray-600"
+                >Select Color:</label
+              >
+              <select
+                id="color"
+                name="color"
+                class="w-full p-2 border rounded mt-2"
+              >
+                {% for color in product.color_variant.all %}
+                <option value="{{ color.id }}">
+                  {{ color.color_name }} (+${{ color.price }})
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Size Options -->
+            <div class="mt-4">
+              <label for="size" class="block font-medium text-gray-600"
+                >Select Size:</label
+              >
+              <select
+                id="size"
+                name="size"
+                class="w-full p-2 border rounded mt-2"
+              >
+                {% for size in product.size_variant.all %}
+                <option value="{{ size.id }}">
+                  {{ size.size_name }} (+${{ size.price }})
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Add to Cart Form -->
+            <form
+              method="post"
+              action="{% url 'cart:add_to_cart' product.uid %}"
+              class="mt-6"
+            >
+              {% csrf_token %}
+              <input type="hidden" name="color" id="color_selected" />
+              <input type="hidden" name="size" id="size_selected" />
+              <button
+                type="submit"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Add to Cart
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const colorSelect = document.getElementById("color");
+      const sizeSelect = document.getElementById("size");
+      const colorInput = document.getElementById("color_selected");
+      const sizeInput = document.getElementById("size_selected");
+
+      colorSelect.addEventListener("change", () => {
+        colorInput.value = colorSelect.value;
+      });
+
+      sizeSelect.addEventListener("change", () => {
+        sizeInput.value = sizeSelect.value;
+      });
+    </script>
+  </body>
+</html>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "base/base.html" %} {% block start %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple E-Commerce Website</title>
+
+    <style>
+      /* General Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Flexbox for Body to Position Footer */
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure it covers the full viewport height */
+        font-family: Arial, sans-serif;
+        background-color: #e5f2f2;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      main {
+        flex: 1; /* Make the main section take up available space */
+        padding: 20px;
+      }
+
+      /* Container for Products */
+      .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin: 20px auto;
+        max-width: 1200px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .product {
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .product:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .product img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+
+      .product-details {
+        text-align: left;
+      }
+
+      .product-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .price {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .product button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      .product button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Sticky Footer */
+      footer {
+        text-align: center;
+        padding: 15px 0;
+        background-color: #333;
+        color: #fff;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Main Content -->
+    <main>
+      <!-- Product Grid -->
+      <section class="products">
+        {% for product in products %}
+        <a href="{% url 'get_product' product.slug %}" class="product">
+          <img
+            src="/media/{{ product.product_images.first.image }}"
+            alt="{{ product.product_name }}"
+          />
+          <div class="product-details">
+            <h3 class="product-name">{{ product.product_name }}</h3>
+            <div class="price">${{ product.price }}</div>
+            <button type="button">Add to Cart</button>
+          </div>
+        </a>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>© 2025 ShopSphere | All Rights Reserved</footer>
+  </body>
+</html>
+{% endblock %}
