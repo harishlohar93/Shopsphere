@@ -13,10 +13,8 @@
       <div class="bg-white shadow-md rounded-lg p-6">
         <table class="table-auto w-full border-collapse border border-gray-200">
           <thead>
-            <tr class="bg-gray-100">
+            <tr class="bg-gray-100 text-center">
               <th class="border border-gray-300 px-4 py-2">Product</th>
-              <th class="border border-gray-300 px-4 py-2">Color</th>
-              <th class="border border-gray-300 px-4 py-2">Size</th>
               <th class="border border-gray-300 px-4 py-2">Price</th>
               <th class="border border-gray-300 px-4 py-2">Quantity</th>
               <th class="border border-gray-300 px-4 py-2">Total</th>
@@ -25,15 +23,9 @@
           </thead>
           <tbody>
             {% for item in cart.cart_items.all %}
-            <tr>
+            <tr class="text-center align-middle">
               <td class="border border-gray-300 px-4 py-2">
                 {{ item.product.product_name }}
-              </td>
-              <td class="border border-gray-300 px-4 py-2">
-                {{ item.color_variant.color_name }}
-              </td>
-              <td class="border border-gray-300 px-4 py-2">
-                {{ item.size_variant.size_name }}
               </td>
               <td class="border border-gray-300 px-4 py-2">
                 ${{ item.product.price }}
@@ -49,7 +41,7 @@
                     name="quantity"
                     value="{{ item.quantity }}"
                     min="1"
-                    class="w-16 px-2 justify-center item-center py-1 border border-gray-300 rounded"
+                    class="w-16 px-2 py-1 border border-gray-300 rounded text-center"
                   />
                   <button
                     type="submit"
@@ -65,20 +57,32 @@
               <td class="border border-gray-300 px-4 py-2">
                 <a
                   href="{% url 'cart:remove_cart_item' item.id %}"
-                  class="bg-red-500 flex item-centre justify-center text-white px-2 py-1 rounded hover:bg-red-600"
+                  class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                   >Remove</a
                 >
               </td>
             </tr>
             {% empty %}
-            <tr>
-              <td colspan="7" class="text-center py-4">Your cart is empty.</td>
+            <tr class="text-center">
+              <td colspan="5" class="text-center py-4">Your cart is empty.</td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
-        <div class="mt-6 text-right">
+        <div class="mt-6 flex justify-between items-center">
           <p class="text-lg font-semibold">Total: ${{ cart.total_price }}</p>
+          {% if cart.cart_items.count > 0 %}
+          <form method="post" action="{% url 'cart:checkout' %}">
+            {% comment %} "{% url 'checkout:checkout_cart' %} {% endcomment %}
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+            >
+              Checkout
+            </button>
+          </form>
+          {% endif %}
         </div>
       </div>
     </div>

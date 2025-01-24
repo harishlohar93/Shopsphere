@@ -7,46 +7,49 @@
     <title>Product Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-50">
     <div class="container mx-auto py-8">
-      <div class="bg-white p-6 rounded shadow">
-        <div class="grid grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Left: Product Images -->
-          <div>
+          <div class="space-y-4">
             <img
               src="/media/{{ product.product_images.first.image }}"
-              class="w-full h-96 object-cover rounded shadow"
+              class="w-full h-96 object-cover rounded-lg shadow-md"
               alt="Product Image"
             />
-            <div class="flex mt-4 space-x-4">
+            <div class="flex gap-4 overflow-x-auto">
               {% for image in product.product_images.all %}
               <img
                 src="/media/{{ image.image }}"
-                class="w-16 h-16 object-cover rounded cursor-pointer hover:opacity-80"
+                class="w-16 h-16 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Thumbnail"
               />
               {% endfor %}
             </div>
           </div>
+
           <!-- Right: Product Details -->
-          <div>
-            <h1 class="text-2xl font-bold">{{ product.product_name }}</h1>
-            <p class="text-lg text-gray-700 mt-2">
+          <div class="space-y-6">
+            <h1 class="text-3xl font-semibold text-gray-900">
+              {{ product.product_name }}
+            </h1>
+            <p class="text-lg text-gray-700">
               {{ product.product_description }}
             </p>
-            <p class="text-xl font-semibold text-green-500 mt-4">
+            <p class="text-2xl font-bold text-green-600">
               Price: ${{ product.price }}
             </p>
 
             <!-- Color Options -->
             <div class="mt-4">
-              <label for="color" class="block font-medium text-gray-600"
+              <label for="color" class="block text-lg font-medium text-gray-800"
                 >Select Color:</label
               >
               <select
                 id="color"
                 name="color"
-                class="w-full p-2 border rounded mt-2"
+                class="w-min p-3 border rounded-md shadow-sm text-gray-700 focus:ring-2 focus:ring-blue-500 mt-2"
               >
                 {% for color in product.color_variant.all %}
                 <option value="{{ color.id }}">
@@ -58,13 +61,13 @@
 
             <!-- Size Options -->
             <div class="mt-4">
-              <label for="size" class="block font-medium text-gray-600"
+              <label for="size" class="block text-lg font-medium text-gray-800"
                 >Select Size:</label
               >
               <select
                 id="size"
                 name="size"
-                class="w-full p-2 border rounded mt-2"
+                class="w-min p-3 border rounded-md shadow-sm text-gray-700 focus:ring-2 focus:ring-blue-500 mt-2"
               >
                 {% for size in product.size_variant.all %}
                 <option value="{{ size.id }}">
@@ -78,17 +81,20 @@
             <form
               method="post"
               action="{% url 'cart:add_to_cart' product.uid %}"
-              class="mt-6"
+              class="mt-6 space-y-4"
             >
               {% csrf_token %}
               <input type="hidden" name="color" id="color_selected" />
               <input type="hidden" name="size" id="size_selected" />
-              <button
-                type="submit"
-                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Add to Cart
-              </button>
+
+              <div class="flex justify-between items-center">
+                <button
+                  type="submit"
+                  class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full"
+                >
+                  Add to Cart
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -107,6 +113,16 @@
 
       sizeSelect.addEventListener("change", () => {
         sizeInput.value = sizeSelect.value;
+      });
+
+      const productImage = document.querySelector(".product-image");
+      const thumbnails = document.querySelectorAll(".product-thumbnail");
+
+      thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener("mouseover", () => {
+          // Set the main image src to the thumbnail's image
+          productImage.src = thumbnail.src;
+        });
       });
     </script>
   </body>

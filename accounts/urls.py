@@ -5,6 +5,9 @@ from accounts.views import register_page , activate_email
 
 from . import views
 
+app_name = 'accounts' # Namespace for the app's URLs
+
+
 
 
 
